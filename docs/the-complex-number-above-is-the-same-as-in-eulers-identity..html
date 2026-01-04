@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 13 (The complex number above is the same as in Euler’s identity.) | BCB420 - Computational System Biology</title>
   <meta name="description" content="Prerequisite work for U of T course BCB420 - Computational System Biology" />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 13 (The complex number above is the same as in Euler’s identity.) | BCB420 - Computational System Biology" />
   <meta property="og:type" content="book" />
@@ -54,8 +54,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -127,7 +128,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -658,7 +658,7 @@ Pass the arguments in the following order: length.out, to, from.
 ##         return(x * phi)
 ##     }
 ## }
-## &lt;bytecode: 0x56075426b370&gt;</code></pre>
+## &lt;bytecode: 0xaaaad581de50&gt;</code></pre>
 <p>But that strictly only works for functions which have been written in basic R code.</p>
 </div>
 <div id="s3-methods" class="section level3 hasAnchor" number="13.3.2">
@@ -667,7 +667,7 @@ Pass the arguments in the following order: length.out, to, from.
 <div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="the-complex-number-above-is-the-same-as-in-eulers-identity..html#cb468-1" tabindex="-1"></a>seq</span></code></pre></div>
 <pre><code>## function (...) 
 ## UseMethod(&quot;seq&quot;)
-## &lt;bytecode: 0x5607546de2d0&gt;
+## &lt;bytecode: 0xaaaad348f830&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="the-complex-number-above-is-the-same-as-in-eulers-identity..html#cb470-1" tabindex="-1"></a><span class="fu">methods</span>(seq)</span></code></pre></div>
 <pre><code>## [1] seq.Date    seq.default seq.POSIXt 
@@ -701,7 +701,8 @@ Pass the arguments in the following order: length.out, to, from.
 ##     else if (!missing(length.out)) {
 ##         len &lt;- length(length.out)
 ##         if (!len) 
-##             stop(&quot;argument &#39;length.out&#39; must be of length 1&quot;)
+##             stop(gettextf(&quot;&#39;%s&#39; must be of length 1&quot;, &quot;length.out&quot;), 
+##                 domain = NA)
 ##         if (len &gt; 1L) {
 ##             warning(&quot;first element used of &#39;length.out&#39; argument&quot;)
 ##             length.out &lt;- length.out[1L]
@@ -711,9 +712,9 @@ Pass the arguments in the following order: length.out, to, from.
 ##     }
 ##     chkDots(...)
 ##     if (!missing(from) &amp;&amp; length(from) != 1L) 
-##         stop(&quot;&#39;from&#39; must be of length 1&quot;)
+##         stop(gettextf(&quot;&#39;%s&#39; must be of length 1&quot;, &quot;from&quot;), domain = NA)
 ##     if (!missing(to) &amp;&amp; length(to) != 1L) 
-##         stop(&quot;&#39;to&#39; must be of length 1&quot;)
+##         stop(gettextf(&quot;&#39;%s&#39; must be of length 1&quot;, &quot;to&quot;), domain = NA)
 ##     if (!missing(from) &amp;&amp; !is.finite(if (is.character(from)) from &lt;- as.numeric(from) else from)) 
 ##         stop(&quot;&#39;from&#39; must be a finite number&quot;)
 ##     if (!missing(to) &amp;&amp; !is.finite(if (is.character(to)) to &lt;- as.numeric(to) else to)) 
@@ -729,7 +730,8 @@ Pass the arguments in the following order: length.out, to, from.
 ##             if (del == 0 &amp;&amp; to == 0) 
 ##                 return(to)
 ##             if (length(by) != 1L) 
-##                 stop(&quot;&#39;by&#39; must be of length 1&quot;)
+##                 stop(gettextf(&quot;&#39;%s&#39; must be of length 1&quot;, &quot;by&quot;), 
+##                   domain = NA)
 ##             if (!is.logint(by)) 
 ##                 int &lt;- FALSE
 ##             else if (!int) 
@@ -844,7 +846,7 @@ Pass the arguments in the following order: length.out, to, from.
 ##     }
 ##     else stop(&quot;too many arguments&quot;)
 ## }
-## &lt;bytecode: 0x5607546dd428&gt;
+## &lt;bytecode: 0xaaaad348d9f0&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 </div>
 </div>
@@ -854,7 +856,7 @@ Pass the arguments in the following order: length.out, to, from.
 <div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="the-complex-number-above-is-the-same-as-in-eulers-identity..html#cb474-1" tabindex="-1"></a>runif</span></code></pre></div>
 <pre><code>## function (n, min = 0, max = 1) 
 ## .Call(C_runif, n, min, max)
-## &lt;bytecode: 0x5607563a5b80&gt;
+## &lt;bytecode: 0xaaaad65fa768&gt;
 ## &lt;environment: namespace:stats&gt;</code></pre>
 <p>To read the C source code, just do a Google search for the function name in the repository where the R sources are kept:</p>
 <p>This search finds runif.c (have a look).<a href="https://www.google.com/search?q=site%3Ahttps%3A%2F%2Fsvn.r-project.org%2FR%2Ftrunk%2Fsrc+runif&amp;rlz=1C5CHFA_enCA740CA742&amp;oq=site%3Ahttps%3A%2F%2Fsvn.r-project.org%2FR%2Ftrunk%2Fsrc+runif&amp;aqs=chrome..69i57j69i58.3647j0j4&amp;sourceid=chrome&amp;ie=UTF-8">site:https://svn.r-project.org/R/trunk/src runif</a></p>
@@ -929,7 +931,7 @@ Copy, explore and run the below code
 <span id="cb478-12"><a href="the-complex-number-above-is-the-same-as-in-eulers-identity..html#cb478-12" tabindex="-1"></a>}</span></code></pre></div>
 <p>Use the function (example)</p>
 <div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="the-complex-number-above-is-the-same-as-in-eulers-identity..html#cb479-1" tabindex="-1"></a>   <span class="fu">myLifeDays</span>(<span class="st">&quot;1932-09-25&quot;</span>)  <span class="co"># Glenn Gould&#39;s birthday</span></span></code></pre></div>
-<pre><code>## [1] &quot;This date was 33702 days ago.&quot;</code></pre>
+<pre><code>## [1] &quot;This date was 34069 days ago.&quot;</code></pre>
 <p>Here is a good opportunity to practice programming: modify this function to accept a second argument. When a second argument is present (e.g. 10000) the function should print the calendar date on which the input date will be the required number of days ago. Then you could use it to know when to celebrate your 10,000th life-day, or your 777th anniversary or whatever.</p>
 </div>
 <div id="self-evaluation-10" class="section level2 hasAnchor" number="13.8">
@@ -1016,47 +1018,47 @@ Version: 1.0.1<br>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": "https://github.com/bcb420-2020/R_basics/commit/master/11-R-Functions.Rmd",
-"text": null
-},
-"view": {
-"link": "https://github.com/bcb420-2020/R_basics/blob/master/11-R-Functions.Rmd",
-"text": null
-},
-"download": ["BCB420_Computational_Systems_Biology_Unit2_R_Basics.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection",
-"scroll_highlight": true
-},
-"toolbar": {
-"position": "fixed"
-},
-"new_session": false
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": "https://github.com/bcb420-2026/R_basics/commit/master/11-R-Functions.Rmd",
+    "text": null
+  },
+  "view": {
+    "link": "https://github.com/bcb420-2026/R_basics/blob/master/11-R-Functions.Rmd",
+    "text": null
+  },
+  "download": ["BCB420_Computational_Systems_Biology_Unit2_R_Basics.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection",
+    "scroll_highlight": true
+  },
+  "toolbar": {
+    "position": "fixed"
+  },
+  "new_session": false
 });
 });
 </script>

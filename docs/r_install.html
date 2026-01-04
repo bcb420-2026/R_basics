@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Installing R and RStudio | BCB420 - Computational System Biology</title>
   <meta name="description" content="Prerequisite work for U of T course BCB420 - Computational System Biology" />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Installing R and RStudio | BCB420 - Computational System Biology" />
   <meta property="og:type" content="book" />
@@ -54,8 +54,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -127,7 +128,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -674,7 +674,7 @@ avoid problems in the first place.
 <li>&lt; &gt; ◁ these are angle brackets.</li>
 <li>{ } ◁ these are (curly) braces.</li>
 <li>” ◁ this, and only this is a quotation mark or double quote. All of these are not: <span style="background-color: #f0948d">“”„«» </span>. They will break your code. Especially the first two are often automatically inserted by MSWord and hard to distinguish.<strong>Never, ever edit code in MS Word. Use R or RStudio. Actually, don’t use notepad or TextEdit either.</strong></li>
-<li>’ ◁ this, and only this is a single quote. All of these are not: <span style="background-color: #f0948d">’’‚‹› </span> . They will break your code. Especially the first two are often automatically inserted by MSWord and hard to distinguish.</li>
+<li>’ ◁ this, and only this is a single quote. All of these are not: <span style="background-color: #f0948d">‘’‚‹› </span> . They will break your code. Especially the first two are often automatically inserted by MSWord and hard to distinguish.</li>
 </ul>
 <div class="rmd-caution">
 <p>
@@ -808,7 +808,7 @@ This prints out the path of the current working directory. Make a
 <li>test modifications to the pipeline without disrupting your current set up.</li>
 <li>Coming back to an analysis years later and there is no need to install older versions of packages or programming languages. Simply create a container and re-run.</li>
 </ul>
-<p><strong>All assignments for this course are expected to compile and run. We will be using the <a href="https://hub.docker.com/repository/docker/risserlin/bcb420-base-image">bcb420-base-image:winter2025</a> docker image to run all or your submitted notebooks. If your notebook runs with no errors and renders your html notebook you will recieve full marks for compilation. It is recommended that you do all your work and assignments using this docker image.</strong></p>
+<p><strong>All assignments for this course are expected to compile and run. We will be using the <a href="https://hub.docker.com/repository/docker/risserlin/bcb420-base-image">bcb420-base-image:winter2026</a> docker image to run all or your submitted notebooks. If your notebook runs with no errors and renders your html notebook you will recieve full marks for compilation. It is recommended that you do all your work and assignments using this docker image.</strong></p>
 <div id="what-is-docker" class="section level3 hasAnchor" number="2.6.1">
 <h3><span class="header-section-number">2.6.1</span> What is docker?<a href="r_install.html#what-is-docker" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
@@ -855,7 +855,7 @@ This prints out the path of the current working directory. Make a
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="r_install.html#cb8-1" tabindex="-1"></a>docker run <span class="sc">-</span>e PASSWORD<span class="ot">=</span>changeit <span class="sc">--</span>rm \</span>
 <span id="cb8-2"><a href="r_install.html#cb8-2" tabindex="-1"></a>  <span class="sc">-</span>v <span class="sc">/</span>Users<span class="sc">/</span>risserlin<span class="sc">/</span>bcb420_code<span class="sc">:</span><span class="er">/</span>home<span class="sc">/</span>rstudio<span class="sc">/</span>projects \</span>
 <span id="cb8-3"><a href="r_install.html#cb8-3" tabindex="-1"></a>  <span class="sc">-</span>p <span class="dv">8787</span><span class="sc">:</span><span class="dv">8787</span> \</span>
-<span id="cb8-4"><a href="r_install.html#cb8-4" tabindex="-1"></a>  risserlin<span class="sc">/</span>bcb420<span class="sc">-</span>base<span class="sc">-</span>image<span class="sc">:</span>winter2025</span></code></pre></div>
+<span id="cb8-4"><a href="r_install.html#cb8-4" tabindex="-1"></a>  risserlin<span class="sc">/</span>bcb420<span class="sc">-</span>base<span class="sc">-</span>image<span class="sc">:</span>winter2026</span></code></pre></div>
 <ul>
 <li>I create a notebook called task3_bcb420.Rmd and save it in /home/rstudio/projects.
 <div class="rmd-caution">
@@ -894,7 +894,7 @@ MacOS/Linux
 </ul>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="r_install.html#cb9-1" tabindex="-1"></a>docker run <span class="sc">-</span>e PASSWORD<span class="ot">=</span>changeit <span class="sc">--</span>rm \</span>
 <span id="cb9-2"><a href="r_install.html#cb9-2" tabindex="-1"></a>  <span class="sc">-</span>v <span class="sc">$</span>{PWD}<span class="sc">:</span><span class="er">/</span>home<span class="sc">/</span>rstudio<span class="sc">/</span>projects <span class="sc">-</span>p <span class="dv">8787</span><span class="sc">:</span><span class="dv">8787</span> \</span>
-<span id="cb9-3"><a href="r_install.html#cb9-3" tabindex="-1"></a>  risserlin<span class="sc">/</span>bcb420<span class="sc">-</span>base<span class="sc">-</span>image<span class="sc">:</span>winter2025</span></code></pre></div>
+<span id="cb9-3"><a href="r_install.html#cb9-3" tabindex="-1"></a>  risserlin<span class="sc">/</span>bcb420<span class="sc">-</span>base<span class="sc">-</span>image<span class="sc">:</span>winter2026</span></code></pre></div>
 <p align="center">
 <img src="images/docker_creation_output.png" alt="R startup" width="75%" align="center" />
 </p>
@@ -915,7 +915,7 @@ MacOS/Linux
 </ul>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="r_install.html#cb10-1" tabindex="-1"></a>docker run <span class="sc">-</span>e PASSWORD<span class="ot">=</span>changeit <span class="sc">--</span>rm \</span>
 <span id="cb10-2"><a href="r_install.html#cb10-2" tabindex="-1"></a>  <span class="sc">-</span>v <span class="st">&quot;$(pwd)&quot;</span><span class="sc">:</span><span class="er">/</span>home<span class="sc">/</span>rstudio<span class="sc">/</span>projects <span class="sc">-</span>p <span class="dv">8787</span><span class="sc">:</span><span class="dv">8787</span> \</span>
-<span id="cb10-3"><a href="r_install.html#cb10-3" tabindex="-1"></a>  risserlin<span class="sc">/</span>bcb420<span class="sc">-</span>base<span class="sc">-</span>image<span class="sc">:</span>winter2025</span></code></pre></div>
+<span id="cb10-3"><a href="r_install.html#cb10-3" tabindex="-1"></a>  risserlin<span class="sc">/</span>bcb420<span class="sc">-</span>base<span class="sc">-</span>image<span class="sc">:</span>winter2026</span></code></pre></div>
 <p align="center">
 <img src="images/docker_creation_output.png" alt="R startup" width="75%" align="center" />
 </p>
@@ -1327,7 +1327,7 @@ libraries can be the source of strange misbehaviour.
 <span id="cb33-4"><a href="r_install.html#cb33-4" tabindex="-1"></a><span class="fu">text</span>(aaindex<span class="sc">$</span>FASG890101<span class="sc">$</span>I,</span>
 <span id="cb33-5"><a href="r_install.html#cb33-5" tabindex="-1"></a>     aaindex<span class="sc">$</span>PONJ960101<span class="sc">$</span>I,</span>
 <span id="cb33-6"><a href="r_install.html#cb33-6" tabindex="-1"></a>     <span class="at">labels=</span><span class="fu">a</span>(<span class="fu">names</span>(aaindex<span class="sc">$</span>FASG890101<span class="sc">$</span>I)))</span></code></pre></div>
-<p><img src="BCB420_Computational_Systems_Biology_Unit2_R_Basics_files/figure-html/plot_hydrophobicity-1.png" width="672" /></p>
+<p><img src="BCB420_Computational_Systems_Biology_Unit2_R_Basics_files/figure-html/plot_hydrophobicity-1.png" alt="" width="672" /></p>
 <ul>
 <li>Now, just for fun, let’s use seqinr package functions to download a sequence and calculate some statistics (however, not to digress too far, without further explanation at this point).</li>
 <li>Copy the code below and paste it into the R-console.</li>
@@ -1465,9 +1465,9 @@ Version: 1.1<br>
 </div>
 </div>
 <h3>References</h3>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-docker" class="csl-entry">
-<span>“What Is a Container?”</span> n.d. <em>Docker</em>. <a href="https://www.docker.com/resources/what-container" class="uri">https://www.docker.com/resources/what-container</a>.
+<span>“What Is a Container?”</span> n.d. In <em>Docker</em>. <a href="https://www.docker.com/resources/what-container" class="uri">Https://www.docker.com/resources/what-container</a>.
 </div>
 </div>
 <div class="footnotes">
@@ -1499,47 +1499,47 @@ Version: 1.1<br>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": "https://github.com/bcb420-2020/R_basics/commit/master/01-R-installation.Rmd",
-"text": null
-},
-"view": {
-"link": "https://github.com/bcb420-2020/R_basics/blob/master/01-R-installation.Rmd",
-"text": null
-},
-"download": ["BCB420_Computational_Systems_Biology_Unit2_R_Basics.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection",
-"scroll_highlight": true
-},
-"toolbar": {
-"position": "fixed"
-},
-"new_session": false
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": "https://github.com/bcb420-2026/R_basics/commit/master/01-R-installation.Rmd",
+    "text": null
+  },
+  "view": {
+    "link": "https://github.com/bcb420-2026/R_basics/blob/master/01-R-installation.Rmd",
+    "text": null
+  },
+  "download": ["BCB420_Computational_Systems_Biology_Unit2_R_Basics.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection",
+    "scroll_highlight": true
+  },
+  "toolbar": {
+    "position": "fixed"
+  },
+  "new_session": false
 });
 });
 </script>

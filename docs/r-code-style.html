@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 15 R Coding Style | BCB420 - Computational System Biology</title>
   <meta name="description" content="Prerequisite work for U of T course BCB420 - Computational System Biology" />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 15 R Coding Style | BCB420 - Computational System Biology" />
   <meta property="og:type" content="book" />
@@ -54,8 +54,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -127,7 +128,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -639,15 +639,15 @@ They work for me, they may not work for you.
 <li>Avoid importing functions wholesale from packages with library(). Rather use the <package>::<function>() syntax to make it clear which function you mean<a href="r-code-style.html#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>. That’s what package namespaces are for in the first place.</li>
 </ul>
 <p><strong>Bad:</strong></p>
-<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="r-code-style.html#cb569-1" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
-<span id="cb569-2"><a href="r-code-style.html#cb569-2" tabindex="-1"></a> </span>
-<span id="cb569-3"><a href="r-code-style.html#cb569-3" tabindex="-1"></a>...</span>
-<span id="cb569-4"><a href="r-code-style.html#cb569-4" tabindex="-1"></a> </span>
-<span id="cb569-5"><a href="r-code-style.html#cb569-5" tabindex="-1"></a>...</span>
-<span id="cb569-6"><a href="r-code-style.html#cb569-6" tabindex="-1"></a> </span>
-<span id="cb569-7"><a href="r-code-style.html#cb569-7" tabindex="-1"></a>clu <span class="ot">&lt;-</span> <span class="fu">components</span>(g)</span></code></pre></div>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="r-code-style.html#cb568-1" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb568-2"><a href="r-code-style.html#cb568-2" tabindex="-1"></a> </span>
+<span id="cb568-3"><a href="r-code-style.html#cb568-3" tabindex="-1"></a>...</span>
+<span id="cb568-4"><a href="r-code-style.html#cb568-4" tabindex="-1"></a> </span>
+<span id="cb568-5"><a href="r-code-style.html#cb568-5" tabindex="-1"></a>...</span>
+<span id="cb568-6"><a href="r-code-style.html#cb568-6" tabindex="-1"></a> </span>
+<span id="cb568-7"><a href="r-code-style.html#cb568-7" tabindex="-1"></a>clu <span class="ot">&lt;-</span> <span class="fu">components</span>(g)</span></code></pre></div>
 <p><strong>Good:</strong></p>
-<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="r-code-style.html#cb570-1" tabindex="-1"></a>clu <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">components</span>(g)</span></code></pre></div>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="r-code-style.html#cb569-1" tabindex="-1"></a>clu <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">components</span>(g)</span></code></pre></div>
 <ul>
 <li>Don’t change the global state
 <ul>
@@ -657,14 +657,14 @@ They work for me, they may not work for you.
 <li>set.seed() changes the state of the Random Number Generator (RNG), which is part of Rs global state. If this state is changed inside a function, it might result in vastly smaller space of random numbers than you would expect. Even resetting the RNG is not a good idea: a repeatable script might require the RNG to be in a defined state and if your function does set.seed(NULL), your enclosing script is no longer repeatable. But of course, we need to be able to compute simulations repeatably. The only acceptable idiom is something like:</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="r-code-style.html#cb571-1" tabindex="-1"></a>mySim <span class="ot">&lt;-</span> <span class="cf">function</span>(N) { ...</span>
-<span id="cb571-2"><a href="r-code-style.html#cb571-2" tabindex="-1"></a>  <span class="co"># do something random N times</span></span>
-<span id="cb571-3"><a href="r-code-style.html#cb571-3" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
-<span id="cb571-4"><a href="r-code-style.html#cb571-4" tabindex="-1"></a>}</span>
-<span id="cb571-5"><a href="r-code-style.html#cb571-5" tabindex="-1"></a> </span>
-<span id="cb571-6"><a href="r-code-style.html#cb571-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">112358</span>)                       <span class="co"># set RNG seed for repeatable randomness</span></span>
-<span id="cb571-7"><a href="r-code-style.html#cb571-7" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">mySim</span>(N)</span>
-<span id="cb571-8"><a href="r-code-style.html#cb571-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)                         <span class="co"># reset the RNG</span></span></code></pre></div>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="r-code-style.html#cb570-1" tabindex="-1"></a>mySim <span class="ot">&lt;-</span> <span class="cf">function</span>(N) { ...</span>
+<span id="cb570-2"><a href="r-code-style.html#cb570-2" tabindex="-1"></a>  <span class="co"># do something random N times</span></span>
+<span id="cb570-3"><a href="r-code-style.html#cb570-3" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
+<span id="cb570-4"><a href="r-code-style.html#cb570-4" tabindex="-1"></a>}</span>
+<span id="cb570-5"><a href="r-code-style.html#cb570-5" tabindex="-1"></a> </span>
+<span id="cb570-6"><a href="r-code-style.html#cb570-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">112358</span>)                       <span class="co"># set RNG seed for repeatable randomness</span></span>
+<span id="cb570-7"><a href="r-code-style.html#cb570-7" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">mySim</span>(N)</span>
+<span id="cb570-8"><a href="r-code-style.html#cb570-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)                         <span class="co"># reset the RNG</span></span></code></pre></div>
 <p>Then you can comment out the lines, or change them to a different seed, or reset the RNG with set.seed(NULL) - everything is explicit.</p>
 </div>
 <div id="layout-1" class="section level2 hasAnchor" number="15.3">
@@ -704,37 +704,37 @@ They work for me, they may not work for you.
 <h2><span class="header-section-number">15.7</span> Spaces<a href="r-code-style.html#spaces" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>if and for are language keywords, not functions. Separate the following parenthesis from the keyword with a space.</p>
 <p><strong>Good:</strong></p>
-<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="r-code-style.html#cb572-1" tabindex="-1"></a><span class="cf">if</span> (silent) { ...</span></code></pre></div>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="r-code-style.html#cb571-1" tabindex="-1"></a><span class="cf">if</span> (silent) { ...</span></code></pre></div>
 <p><strong>Bad:</strong></p>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="r-code-style.html#cb573-1" tabindex="-1"></a><span class="cf">if</span>(silent) { ...</span></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="r-code-style.html#cb572-1" tabindex="-1"></a><span class="cf">if</span>(silent) { ...</span></code></pre></div>
 <ul>
-<li><p>Always separate operators and arguments with spaces.<sup>[Separating operators with spaces is especially important for the assignment operator &lt;-. Consider this: myPreciousData &lt; -2 returns a vector of TRUE and FALSE, depending on whether the values in myPreciousData are less than -2. But myPreciousData&lt;-2 overwrites every single element with the number 2! I’m not even making this up - happened to a student in a workshop I taught.]</sup>[The = sign is a bit of a special case. When I write e.g. a plot statement, or construct a dataframe, I prefer not to use spaces if the expression ends up all on one line, but to use spaces when the arguments are on separate lines.]</p></li>
+<li><p>Always separate operators and arguments with spaces.<a href="r-code-style.html#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a><a href="r-code-style.html#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a></p></li>
 <li><p>Never separate function names and their following parentheses with spaces.</p></li>
 <li><p>Always use a space after a comma, and never before a comma. Except in subsetting expressions, where we don’t want the comma to hide against the bracket.</p></li>
 </ul>
 <p><strong>Good:</strong></p>
-<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="r-code-style.html#cb574-1" tabindex="-1"></a><span class="fu">print</span>(<span class="dv">1</span> <span class="sc">/</span> <span class="dv">3</span>, <span class="at">digits =</span> <span class="dv">10</span>)</span>
-<span id="cb574-2"><a href="r-code-style.html#cb574-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span> id <span class="sc">%in%</span> IDs) { ...<span class="st">&#39;</span></span>
-<span id="cb574-3"><a href="r-code-style.html#cb574-3" tabindex="-1"></a><span class="st">expressionProfiles[ , 1:3]</span></span></code></pre></div>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="r-code-style.html#cb573-1" tabindex="-1"></a><span class="fu">print</span>(<span class="dv">1</span> <span class="sc">/</span> <span class="dv">3</span>, <span class="at">digits =</span> <span class="dv">10</span>)</span>
+<span id="cb573-2"><a href="r-code-style.html#cb573-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span> id <span class="sc">%in%</span> IDs) { ...<span class="st">&#39;</span></span>
+<span id="cb573-3"><a href="r-code-style.html#cb573-3" tabindex="-1"></a><span class="st">expressionProfiles[ , 1:3]</span></span></code></pre></div>
 <p><strong>Bad:</strong></p>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="r-code-style.html#cb575-1" tabindex="-1"></a><span class="fu">print</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="dv">3</span> ,<span class="at">digits=</span><span class="dv">10</span>)</span>
-<span id="cb575-2"><a href="r-code-style.html#cb575-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>id <span class="sc">%in%</span> IDs) { ...</span>
-<span id="cb575-3"><a href="r-code-style.html#cb575-3" tabindex="-1"></a>expressionProfiles[, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="r-code-style.html#cb574-1" tabindex="-1"></a><span class="fu">print</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="dv">3</span> ,<span class="at">digits=</span><span class="dv">10</span>)</span>
+<span id="cb574-2"><a href="r-code-style.html#cb574-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>id <span class="sc">%in%</span> IDs) { ...</span>
+<span id="cb574-3"><a href="r-code-style.html#cb574-3" tabindex="-1"></a>expressionProfiles[, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div>
 </div>
 <div id="names" class="section level2 hasAnchor" number="15.8">
 <h2><span class="header-section-number">15.8</span> Names<a href="r-code-style.html#names" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There are only two hard things in Computer Science: cache invalidation and naming things.</p>
 <ul>
-<li><p>Phil Karlton<a href="r-code-style.html#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a></p>
+<li><p>Phil Karlton<a href="r-code-style.html#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a></p>
 <ul>
 <li>Use informative and specific filenames for code sources; give them the extension .R</li>
 <li>Periods have a syntactic meaning in object-oriented classes. I consider their use in normal variables names wrong, even though this is not a syntax error and many R library functions have such names (e.g. Sys.time() and other system calls.)</li>
 <li>Create names so that related variables or functions are alphabetically sorted together, code autocomplete will be more useful.</li>
-<li>Use the concise camelCaseStyle for variable names, don’t use the confusing.dot.style or the rambling pothole_style<sup>[But nevert hesitate to make exceptions if this makes your code more legible.]</sup>[This is not a random opinion but based on that it’s easier to keep within the 80-character line limit. Also see the <a href="http://citeseerx.ist.psu.edu/viewdoc/similar?doi=10.1.1.158.9499&amp;type=ab">linked article</a>].</li>
+<li>Use the concise camelCaseStyle for variable names, don’t use the confusing.dot.style or the rambling pothole_style<a href="r-code-style.html#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a><a href="r-code-style.html#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>.</li>
 <li>Don’t abbreviate argument names when calling functions. You can, but you shouldn’t.</li>
-<li>Never reassign reserved words<a href="r-code-style.html#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>.</li>
+<li>Never reassign reserved words<a href="r-code-style.html#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>.</li>
 <li>Don’t use c as a variable name since c() is a function.</li>
-<li>Don’t call your data frames df since df() is a function.<a href="r-code-style.html#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a></li>
+<li>Don’t call your data frames df since df() is a function.<a href="r-code-style.html#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a></li>
 <li>Name length should be commensurate with the scope of a variable. Short names for local scope. More explicit names for global scope. I often write global parameters in ALL CAPS: MAXWIDTH if they are defined at the top of a code module.</li>
 <li>Specific naming conventions I like:
 <ul>
@@ -756,29 +756,29 @@ They work for me, they may not work for you.
 <h2><span class="header-section-number">15.9</span> Conditionals<a href="r-code-style.html#conditionals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This may be controversial. The code block in an if (<condition>) {…} statement is evaluated if <condition> is TRUE. But what if we use a boolean variable in the condition?</p>
 <p>Should we write:</p>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="r-code-style.html#cb576-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">&lt;</span>boolean variable<span class="sc">&gt;</span>) { ...</span></code></pre></div>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="r-code-style.html#cb575-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">&lt;</span>boolean variable<span class="sc">&gt;</span>) { ...</span></code></pre></div>
 <p>or</p>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="r-code-style.html#cb577-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">&lt;</span>boolean variable<span class="sc">&gt;</span> <span class="er">==</span> <span class="cn">TRUE</span>) { ...</span></code></pre></div>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="r-code-style.html#cb576-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">&lt;</span>boolean variable<span class="sc">&gt;</span> <span class="er">==</span> <span class="cn">TRUE</span>) { ...</span></code></pre></div>
 <ul>
 <li>It depends. Remember - the goal is to make your code as explicit and readable as possible.</li>
 <li>If our variable is e.g. a, then …</li>
 </ul>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="r-code-style.html#cb578-1" tabindex="-1"></a><span class="cf">if</span> (a) { ...</span></code></pre></div>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="r-code-style.html#cb577-1" tabindex="-1"></a><span class="cf">if</span> (a) { ...</span></code></pre></div>
 <p>… is not good. Better write …</p>
-<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="r-code-style.html#cb579-1" tabindex="-1"></a><span class="cf">if</span> (a <span class="sc">==</span> <span class="cn">TRUE</span>) { ...</span></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="r-code-style.html#cb578-1" tabindex="-1"></a><span class="cf">if</span> (a <span class="sc">==</span> <span class="cn">TRUE</span>) { ...</span></code></pre></div>
 <p>… and treat this as any other condition that needs to be evaluated. However - if you have given this a meaningful variable name in the first place, something like …</p>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="r-code-style.html#cb580-1" tabindex="-1"></a><span class="cf">if</span> (recordIsValid) { ...</span></code></pre></div>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="r-code-style.html#cb579-1" tabindex="-1"></a><span class="cf">if</span> (recordIsValid) { ...</span></code></pre></div>
 <p>… is great, whereas …</p>
-<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="r-code-style.html#cb581-1" tabindex="-1"></a><span class="cf">if</span> (recordIsValid <span class="sc">==</span> <span class="cn">TRUE</span>) { ...</span></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="r-code-style.html#cb580-1" tabindex="-1"></a><span class="cf">if</span> (recordIsValid <span class="sc">==</span> <span class="cn">TRUE</span>) { ...</span></code></pre></div>
 <p>… is something that feels oddly self-contradictory. So best practice here depends on context. Myself, I more often than not end up write if (something-something-that-is-boolean == TRUE) …, (and that’s not because I don’t understand how conditionals work).</p>
 <p>Make the FALSE behaviour explicit. Always use an else at the end of a conditional to define what your code does if the condition is not TRUE. Otherwise your reader will wonder whether your code covers all cases. What if your code should do nothing in the FALSE case? Make that explicit:</p>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="r-code-style.html#cb582-1" tabindex="-1"></a><span class="cf">if</span> (a <span class="sc">&gt;</span> b) {</span>
-<span id="cb582-2"><a href="r-code-style.html#cb582-2" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> b</span>
-<span id="cb582-3"><a href="r-code-style.html#cb582-3" tabindex="-1"></a>  b <span class="ot">&lt;-</span> a</span>
-<span id="cb582-4"><a href="r-code-style.html#cb582-4" tabindex="-1"></a>  a <span class="ot">&lt;-</span> tmp</span>
-<span id="cb582-5"><a href="r-code-style.html#cb582-5" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb582-6"><a href="r-code-style.html#cb582-6" tabindex="-1"></a>  ;</span>
-<span id="cb582-7"><a href="r-code-style.html#cb582-7" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="r-code-style.html#cb581-1" tabindex="-1"></a><span class="cf">if</span> (a <span class="sc">&gt;</span> b) {</span>
+<span id="cb581-2"><a href="r-code-style.html#cb581-2" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> b</span>
+<span id="cb581-3"><a href="r-code-style.html#cb581-3" tabindex="-1"></a>  b <span class="ot">&lt;-</span> a</span>
+<span id="cb581-4"><a href="r-code-style.html#cb581-4" tabindex="-1"></a>  a <span class="ot">&lt;-</span> tmp</span>
+<span id="cb581-5"><a href="r-code-style.html#cb581-5" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb581-6"><a href="r-code-style.html#cb581-6" tabindex="-1"></a>  ;</span>
+<span id="cb581-7"><a href="r-code-style.html#cb581-7" tabindex="-1"></a>}</span></code></pre></div>
 <p>Instead of the lone semicolon you could also write NULL, or invisible(NULL).</p>
 </div>
 <div id="indent-style" class="section level2 hasAnchor" number="15.10">
@@ -790,13 +790,13 @@ They work for me, they may not work for you.
 <li>braces mandatory even if there is only one statement to execute.</li>
 </ol>
 <p><strong>Sample:</strong></p>
-<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="r-code-style.html#cb583-1" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(x) <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
-<span id="cb583-2"><a href="r-code-style.html#cb583-2" tabindex="-1"></a>  perm <span class="ot">&lt;-</span> <span class="fu">sample</span>(x)</span>
-<span id="cb583-3"><a href="r-code-style.html#cb583-3" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">length</span>(x) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb583-4"><a href="r-code-style.html#cb583-4" tabindex="-1"></a>  perm <span class="ot">&lt;-</span> x</span>
-<span id="cb583-5"><a href="r-code-style.html#cb583-5" tabindex="-1"></a>} <span class="cf">else</span>  {</span>
-<span id="cb583-6"><a href="r-code-style.html#cb583-6" tabindex="-1"></a>  perm <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb583-7"><a href="r-code-style.html#cb583-7" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="r-code-style.html#cb582-1" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(x) <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb582-2"><a href="r-code-style.html#cb582-2" tabindex="-1"></a>  perm <span class="ot">&lt;-</span> <span class="fu">sample</span>(x)</span>
+<span id="cb582-3"><a href="r-code-style.html#cb582-3" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">length</span>(x) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb582-4"><a href="r-code-style.html#cb582-4" tabindex="-1"></a>  perm <span class="ot">&lt;-</span> x</span>
+<span id="cb582-5"><a href="r-code-style.html#cb582-5" tabindex="-1"></a>} <span class="cf">else</span>  {</span>
+<span id="cb582-6"><a href="r-code-style.html#cb582-6" tabindex="-1"></a>  perm <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb582-7"><a href="r-code-style.html#cb582-7" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="indentation-of-long-function-declarations" class="section level2 hasAnchor" number="15.11">
 <h2><span class="header-section-number">15.11</span> Indentation of long function declarations<a href="r-code-style.html#indentation-of-long-function-declarations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -806,17 +806,17 @@ They work for me, they may not work for you.
 <h2><span class="header-section-number">15.12</span> Loops<a href="r-code-style.html#loops" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Pre-allocate your result objects to have the correct size if at all possible. Growing objects dynamically with c(), cbind(), or rbind() is much, much slower.</p>
 <p>Use seq_along(), not length() to compute the range of index variables. If the object you are iterating over has length zero (i.e. it is NULL, like e.g. the result of a grep() operation if the pattern was not found) then using …</p>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="r-code-style.html#cb584-1" tabindex="-1"></a><span class="cf">for</span> (idx <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(myVector)) { ...</span></code></pre></div>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="r-code-style.html#cb583-1" tabindex="-1"></a><span class="cf">for</span> (idx <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(myVector)) { ...</span></code></pre></div>
 <p>… will result in an iteration range of 1:0 since length(NULL) is zero, and the loop will be executed twice even though it should not have been. The correct and safe way to iterate is …</p>
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="r-code-style.html#cb585-1" tabindex="-1"></a><span class="cf">for</span> (idx <span class="cf">in</span> <span class="fu">seq_along</span>(myVector)) { ...</span></code></pre></div>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="r-code-style.html#cb584-1" tabindex="-1"></a><span class="cf">for</span> (idx <span class="cf">in</span> <span class="fu">seq_along</span>(myVector)) { ...</span></code></pre></div>
 <p>… which will not execute since seq_along(NULL) is NULL.</p>
 </div>
 <div id="functions-1" class="section level2 hasAnchor" number="15.13">
 <h2><span class="header-section-number">15.13</span> Functions<a href="r-code-style.html#functions-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Explicitly assign values to crucial function arguments, even if you think you know that that value is the language default. For example …</p>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="r-code-style.html#cb586-1" tabindex="-1"></a><span class="fu">sort</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="r-code-style.html#cb585-1" tabindex="-1"></a><span class="fu">sort</span>(x)</span></code></pre></div>
 <p>… sorts in increasing order, smallest first. But even though …</p>
-<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="r-code-style.html#cb587-1" tabindex="-1"></a><span class="fu">sort</span>(x, <span class="at">decreasing =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="r-code-style.html#cb586-1" tabindex="-1"></a><span class="fu">sort</span>(x, <span class="at">decreasing =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>… does the same thing, the expression explicitly tells the reader what it is going to do. And that’s good.</p>
 <p>Always explicitly return values from functions, never rely on the implicit behaviour that returns the last expression. This is not superfluous, it is explicit.</p>
 <p>If there is nothing to return because the function is invoked for its side effects of writing a file or plotting a graph, write it into your code that nothing will be returned. This prevents you from accidentally returning the result of last expression anyway (as the language does by default), or the reader might think you forgot something. The idiom is:
@@ -826,46 +826,46 @@ return(invisible(NULL))</p>
 <div id="efficiency" class="section level2 hasAnchor" number="15.14">
 <h2><span class="header-section-number">15.14</span> Efficiency<a href="r-code-style.html#efficiency" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>If possible, do not grow data structures dynamically, but create the whole structure with “empty” values, then assign values to its elements. This is much faster.</p>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="r-code-style.html#cb588-1" tabindex="-1"></a><span class="co"># This is really bad:</span></span>
-<span id="cb588-2"><a href="r-code-style.html#cb588-2" tabindex="-1"></a> <span class="fu">system.time</span>({</span>
-<span id="cb588-3"><a href="r-code-style.html#cb588-3" tabindex="-1"></a>   N <span class="ot">&lt;-</span> <span class="dv">100000</span></span>
-<span id="cb588-4"><a href="r-code-style.html#cb588-4" tabindex="-1"></a>   v <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
-<span id="cb588-5"><a href="r-code-style.html#cb588-5" tabindex="-1"></a>   <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N) {</span>
-<span id="cb588-6"><a href="r-code-style.html#cb588-6" tabindex="-1"></a>       v <span class="ot">&lt;-</span> <span class="fu">c</span>(v, <span class="fu">sqrt</span>(i))</span>
-<span id="cb588-7"><a href="r-code-style.html#cb588-7" tabindex="-1"></a>   }</span>
-<span id="cb588-8"><a href="r-code-style.html#cb588-8" tabindex="-1"></a> })</span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="r-code-style.html#cb587-1" tabindex="-1"></a><span class="co"># This is really bad:</span></span>
+<span id="cb587-2"><a href="r-code-style.html#cb587-2" tabindex="-1"></a> <span class="fu">system.time</span>({</span>
+<span id="cb587-3"><a href="r-code-style.html#cb587-3" tabindex="-1"></a>   N <span class="ot">&lt;-</span> <span class="dv">100000</span></span>
+<span id="cb587-4"><a href="r-code-style.html#cb587-4" tabindex="-1"></a>   v <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
+<span id="cb587-5"><a href="r-code-style.html#cb587-5" tabindex="-1"></a>   <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N) {</span>
+<span id="cb587-6"><a href="r-code-style.html#cb587-6" tabindex="-1"></a>       v <span class="ot">&lt;-</span> <span class="fu">c</span>(v, <span class="fu">sqrt</span>(i))</span>
+<span id="cb587-7"><a href="r-code-style.html#cb587-7" tabindex="-1"></a>   }</span>
+<span id="cb587-8"><a href="r-code-style.html#cb587-8" tabindex="-1"></a> })</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  14.299   0.000  14.299</code></pre>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="r-code-style.html#cb590-1" tabindex="-1"></a> <span class="co"># Even only writing directly to new elements is much, much better:</span></span>
-<span id="cb590-2"><a href="r-code-style.html#cb590-2" tabindex="-1"></a> <span class="fu">system.time</span>({</span>
-<span id="cb590-3"><a href="r-code-style.html#cb590-3" tabindex="-1"></a>   N <span class="ot">&lt;-</span> <span class="dv">100000</span></span>
-<span id="cb590-4"><a href="r-code-style.html#cb590-4" tabindex="-1"></a>   v <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
-<span id="cb590-5"><a href="r-code-style.html#cb590-5" tabindex="-1"></a>   <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N) {</span>
-<span id="cb590-6"><a href="r-code-style.html#cb590-6" tabindex="-1"></a>       v[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(i)</span>
-<span id="cb590-7"><a href="r-code-style.html#cb590-7" tabindex="-1"></a>   }</span>
-<span id="cb590-8"><a href="r-code-style.html#cb590-8" tabindex="-1"></a> })</span></code></pre></div>
+##   9.219   0.011   9.233</code></pre>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="r-code-style.html#cb589-1" tabindex="-1"></a> <span class="co"># Even only writing directly to new elements is much, much better:</span></span>
+<span id="cb589-2"><a href="r-code-style.html#cb589-2" tabindex="-1"></a> <span class="fu">system.time</span>({</span>
+<span id="cb589-3"><a href="r-code-style.html#cb589-3" tabindex="-1"></a>   N <span class="ot">&lt;-</span> <span class="dv">100000</span></span>
+<span id="cb589-4"><a href="r-code-style.html#cb589-4" tabindex="-1"></a>   v <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
+<span id="cb589-5"><a href="r-code-style.html#cb589-5" tabindex="-1"></a>   <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N) {</span>
+<span id="cb589-6"><a href="r-code-style.html#cb589-6" tabindex="-1"></a>       v[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(i)</span>
+<span id="cb589-7"><a href="r-code-style.html#cb589-7" tabindex="-1"></a>   }</span>
+<span id="cb589-8"><a href="r-code-style.html#cb589-8" tabindex="-1"></a> })</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.026   0.000   0.026</code></pre>
-<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="r-code-style.html#cb592-1" tabindex="-1"></a><span class="co"># That&#39;s abaout as fast as doing the same thing with a vapply() function.</span></span>
-<span id="cb592-2"><a href="r-code-style.html#cb592-2" tabindex="-1"></a> </span>
-<span id="cb592-3"><a href="r-code-style.html#cb592-3" tabindex="-1"></a> <span class="co"># The fastest way is to preallocate memory, it actually comes close to the</span></span>
-<span id="cb592-4"><a href="r-code-style.html#cb592-4" tabindex="-1"></a> <span class="co"># vectorized operation:</span></span>
-<span id="cb592-5"><a href="r-code-style.html#cb592-5" tabindex="-1"></a> </span>
-<span id="cb592-6"><a href="r-code-style.html#cb592-6" tabindex="-1"></a> <span class="fu">system.time</span>({</span>
-<span id="cb592-7"><a href="r-code-style.html#cb592-7" tabindex="-1"></a>   N <span class="ot">&lt;-</span> <span class="dv">100000</span></span>
-<span id="cb592-8"><a href="r-code-style.html#cb592-8" tabindex="-1"></a>   v <span class="ot">&lt;-</span> <span class="fu">numeric</span>(N)</span>
-<span id="cb592-9"><a href="r-code-style.html#cb592-9" tabindex="-1"></a>   <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(v)) {</span>
-<span id="cb592-10"><a href="r-code-style.html#cb592-10" tabindex="-1"></a>       v[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(i)</span>
-<span id="cb592-11"><a href="r-code-style.html#cb592-11" tabindex="-1"></a>   }</span>
-<span id="cb592-12"><a href="r-code-style.html#cb592-12" tabindex="-1"></a> })</span></code></pre></div>
+##   0.015   0.000   0.015</code></pre>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="r-code-style.html#cb591-1" tabindex="-1"></a><span class="co"># That&#39;s abaout as fast as doing the same thing with a vapply() function.</span></span>
+<span id="cb591-2"><a href="r-code-style.html#cb591-2" tabindex="-1"></a> </span>
+<span id="cb591-3"><a href="r-code-style.html#cb591-3" tabindex="-1"></a> <span class="co"># The fastest way is to preallocate memory, it actually comes close to the</span></span>
+<span id="cb591-4"><a href="r-code-style.html#cb591-4" tabindex="-1"></a> <span class="co"># vectorized operation:</span></span>
+<span id="cb591-5"><a href="r-code-style.html#cb591-5" tabindex="-1"></a> </span>
+<span id="cb591-6"><a href="r-code-style.html#cb591-6" tabindex="-1"></a> <span class="fu">system.time</span>({</span>
+<span id="cb591-7"><a href="r-code-style.html#cb591-7" tabindex="-1"></a>   N <span class="ot">&lt;-</span> <span class="dv">100000</span></span>
+<span id="cb591-8"><a href="r-code-style.html#cb591-8" tabindex="-1"></a>   v <span class="ot">&lt;-</span> <span class="fu">numeric</span>(N)</span>
+<span id="cb591-9"><a href="r-code-style.html#cb591-9" tabindex="-1"></a>   <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(v)) {</span>
+<span id="cb591-10"><a href="r-code-style.html#cb591-10" tabindex="-1"></a>       v[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(i)</span>
+<span id="cb591-11"><a href="r-code-style.html#cb591-11" tabindex="-1"></a>   }</span>
+<span id="cb591-12"><a href="r-code-style.html#cb591-12" tabindex="-1"></a> })</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.006   0.000   0.006</code></pre>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="r-code-style.html#cb594-1" tabindex="-1"></a><span class="co"># Using a vectorized operation is the fastest approach overall and the</span></span>
-<span id="cb594-2"><a href="r-code-style.html#cb594-2" tabindex="-1"></a><span class="co"># method of choice:</span></span>
-<span id="cb594-3"><a href="r-code-style.html#cb594-3" tabindex="-1"></a> </span>
-<span id="cb594-4"><a href="r-code-style.html#cb594-4" tabindex="-1"></a><span class="fu">system.time</span>({ v <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100000</span>) })</span></code></pre></div>
+##   0.005   0.000   0.006</code></pre>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="r-code-style.html#cb593-1" tabindex="-1"></a><span class="co"># Using a vectorized operation is the fastest approach overall and the</span></span>
+<span id="cb593-2"><a href="r-code-style.html#cb593-2" tabindex="-1"></a><span class="co"># method of choice:</span></span>
+<span id="cb593-3"><a href="r-code-style.html#cb593-3" tabindex="-1"></a> </span>
+<span id="cb593-4"><a href="r-code-style.html#cb593-4" tabindex="-1"></a><span class="fu">system.time</span>({ v <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100000</span>) })</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.001   0.000   0.001</code></pre>
+##       0       0       0</code></pre>
 <ul>
 <li>Don’t buy into the “apply good, for-loop bad” nonsense. Especially not if you need speed: a well-written for-loop will outperform an apply() statement, which internally uses a for-loop anyway. The reason we often use apply() is because we are following a functional programming idiom, not because there is something magical and exalted about the apply() function. It’s usually a bit subtle which idiom is “better” at any given time.</li>
 </ul>
@@ -1000,7 +1000,7 @@ script.
 <ul>
 <li>Understanding the setup
 <ul>
-<li>Imagine you made a typo when you entered your eMail address and now the file .myProfile.R contains a mistake. How do you fix this?<a href="r-code-style.html#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a></li>
+<li>Imagine you made a typo when you entered your eMail address and now the file .myProfile.R contains a mistake. How do you fix this?<a href="r-code-style.html#fn28" class="footnote-ref" id="fnref28"><sup>28</sup></a></li>
 </ul></li>
 </ul>
 </div>
@@ -1054,9 +1054,9 @@ Version: 1.0<br>
 <div id="footnotes-13" class="section level3 hasAnchor" number="15.21.2">
 <h3><span class="header-section-number">15.21.2</span> Footnotes:<a href="r-code-style.html#footnotes-13" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div class="csl-entry">
-<span>“What Is a Container?”</span> n.d. <em>Docker</em>. <a href="https://www.docker.com/resources/what-container" class="uri">https://www.docker.com/resources/what-container</a>.
+<span>“What Is a Container?”</span> n.d. In <em>Docker</em>. <a href="https://www.docker.com/resources/what-container" class="uri">Https://www.docker.com/resources/what-container</a>.
 </div>
 </div>
 </div>
@@ -1085,10 +1085,14 @@ Version: 1.0<br>
 <li id="fn18"><p>countDown &lt;- function(n) {<br>start &lt;- n<br> countdown &lt;- start<br> txt &lt;- as.character(start)<br> <br> while (countdown &gt; 0) {<br> countdown &lt;- countdown - 1<br> txt &lt;- c(txt, countdown)<br> }<br> txt &lt;- c(txt,“Lift Off!”)<br> return(txt)<br>}<br> <br>countDown(7)<br><a href="the-complex-number-above-is-the-same-as-in-eulers-identity..html#fnref18" class="footnote-back">↩︎</a></p></li>
 <li id="fn19"><p>I’m serious: I have reformatted major pieces of code more than once after learning of a better approach, and if that creates better code it is very satisfying.<a href="r-code-style.html#fnref19" class="footnote-back">↩︎</a></p></li>
 <li id="fn20"><p>It is happening more and more frequently that functions in different packages we load have the same name. Then our code’s behaviour will depend on the order in which the libraries were loaded. Evil.<a href="r-code-style.html#fnref20" class="footnote-back">↩︎</a></p></li>
-<li id="fn21"><p>For a complementary perspective, <a href="http://thecodelesscode.com/case/220">see here</a>.<a href="r-code-style.html#fnref21" class="footnote-back">↩︎</a></p></li>
-<li id="fn22"><p>In my opinion, base R uses far too many function names that would be useful for variables. But we’re not going to change that. So I often just prefix my variable names with my- or this-, eg myDf, thisLength etc.<a href="r-code-style.html#fnref22" class="footnote-back">↩︎</a></p></li>
-<li id="fn23"><p>Here are more names that may seem attractive as variable names but that are in fact functions in the base R package and thus may cause confusion: all(), args(), attr(), beta(), body(), col(), date(), det(), diag(), diff(), dim(), dir(), dump(), eigen(), file(), files(), gamma(), kappa(), length(), list(), load(), log(), max(), mean(), min(), open(), q(), raw(), row(), sample(), seq(), sub(), summary(), table(), type(), url(), vector(), and version(). I’m sure you get the idea - composite names of the type proposed above in CamelCase are usually safe.<a href="r-code-style.html#fnref23" class="footnote-back">↩︎</a></p></li>
-<li id="fn24"><p>.myProfile.R is itself a file in the local working directory. Simply open it with the RStudio editor, fix the error, and save. Then type source(“.myProfile.R”) into the console to overwrite the old (wrong) definition with the corrected one.<a href="r-code-style.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p>Separating operators with spaces is especially important for the assignment operator &lt;-. Consider this: myPreciousData &lt; -2 returns a vector of TRUE and FALSE, depending on whether the values in myPreciousData are less than -2. But myPreciousData&lt;-2 overwrites every single element with the number 2! I’m not even making this up - happened to a student in a workshop I taught.<a href="r-code-style.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn22"><p>The = sign is a bit of a special case. When I write e.g. a plot statement, or construct a dataframe, I prefer not to use spaces if the expression ends up all on one line, but to use spaces when the arguments are on separate lines.<a href="r-code-style.html#fnref22" class="footnote-back">↩︎</a></p></li>
+<li id="fn23"><p>For a complementary perspective, <a href="http://thecodelesscode.com/case/220">see here</a>.<a href="r-code-style.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<li id="fn24"><p>But nevert hesitate to make exceptions if this makes your code more legible.<a href="r-code-style.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn25"><p>This is not a random opinion but based on that it’s easier to keep within the 80-character line limit. Also see the <a href="http://citeseerx.ist.psu.edu/viewdoc/similar?doi=10.1.1.158.9499&amp;type=ab">linked article</a><a href="r-code-style.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<li id="fn26"><p>In my opinion, base R uses far too many function names that would be useful for variables. But we’re not going to change that. So I often just prefix my variable names with my- or this-, eg myDf, thisLength etc.<a href="r-code-style.html#fnref26" class="footnote-back">↩︎</a></p></li>
+<li id="fn27"><p>Here are more names that may seem attractive as variable names but that are in fact functions in the base R package and thus may cause confusion: all(), args(), attr(), beta(), body(), col(), date(), det(), diag(), diff(), dim(), dir(), dump(), eigen(), file(), files(), gamma(), kappa(), length(), list(), load(), log(), max(), mean(), min(), open(), q(), raw(), row(), sample(), seq(), sub(), summary(), table(), type(), url(), vector(), and version(). I’m sure you get the idea - composite names of the type proposed above in CamelCase are usually safe.<a href="r-code-style.html#fnref27" class="footnote-back">↩︎</a></p></li>
+<li id="fn28"><p>.myProfile.R is itself a file in the local working directory. Simply open it with the RStudio editor, fix the error, and save. Then type source(“.myProfile.R”) into the console to overwrite the old (wrong) definition with the corrected one.<a href="r-code-style.html#fnref28" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 <div class="footnotes">
@@ -1096,10 +1100,14 @@ Version: 1.0<br>
 <ol start="19">
 <li id="fn19"><p>I’m serious: I have reformatted major pieces of code more than once after learning of a better approach, and if that creates better code it is very satisfying.<a href="r-code-style.html#fnref19" class="footnote-back">↩︎</a></p></li>
 <li id="fn20"><p>It is happening more and more frequently that functions in different packages we load have the same name. Then our code’s behaviour will depend on the order in which the libraries were loaded. Evil.<a href="r-code-style.html#fnref20" class="footnote-back">↩︎</a></p></li>
-<li id="fn21"><p>For a complementary perspective, <a href="http://thecodelesscode.com/case/220">see here</a>.<a href="r-code-style.html#fnref21" class="footnote-back">↩︎</a></p></li>
-<li id="fn22"><p>In my opinion, base R uses far too many function names that would be useful for variables. But we’re not going to change that. So I often just prefix my variable names with my- or this-, eg myDf, thisLength etc.<a href="r-code-style.html#fnref22" class="footnote-back">↩︎</a></p></li>
-<li id="fn23"><p>Here are more names that may seem attractive as variable names but that are in fact functions in the base R package and thus may cause confusion: all(), args(), attr(), beta(), body(), col(), date(), det(), diag(), diff(), dim(), dir(), dump(), eigen(), file(), files(), gamma(), kappa(), length(), list(), load(), log(), max(), mean(), min(), open(), q(), raw(), row(), sample(), seq(), sub(), summary(), table(), type(), url(), vector(), and version(). I’m sure you get the idea - composite names of the type proposed above in CamelCase are usually safe.<a href="r-code-style.html#fnref23" class="footnote-back">↩︎</a></p></li>
-<li id="fn24"><p>.myProfile.R is itself a file in the local working directory. Simply open it with the RStudio editor, fix the error, and save. Then type source(“.myProfile.R”) into the console to overwrite the old (wrong) definition with the corrected one.<a href="r-code-style.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p>Separating operators with spaces is especially important for the assignment operator &lt;-. Consider this: myPreciousData &lt; -2 returns a vector of TRUE and FALSE, depending on whether the values in myPreciousData are less than -2. But myPreciousData&lt;-2 overwrites every single element with the number 2! I’m not even making this up - happened to a student in a workshop I taught.<a href="r-code-style.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn22"><p>The = sign is a bit of a special case. When I write e.g. a plot statement, or construct a dataframe, I prefer not to use spaces if the expression ends up all on one line, but to use spaces when the arguments are on separate lines.<a href="r-code-style.html#fnref22" class="footnote-back">↩︎</a></p></li>
+<li id="fn23"><p>For a complementary perspective, <a href="http://thecodelesscode.com/case/220">see here</a>.<a href="r-code-style.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<li id="fn24"><p>But nevert hesitate to make exceptions if this makes your code more legible.<a href="r-code-style.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn25"><p>This is not a random opinion but based on that it’s easier to keep within the 80-character line limit. Also see the <a href="http://citeseerx.ist.psu.edu/viewdoc/similar?doi=10.1.1.158.9499&amp;type=ab">linked article</a><a href="r-code-style.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<li id="fn26"><p>In my opinion, base R uses far too many function names that would be useful for variables. But we’re not going to change that. So I often just prefix my variable names with my- or this-, eg myDf, thisLength etc.<a href="r-code-style.html#fnref26" class="footnote-back">↩︎</a></p></li>
+<li id="fn27"><p>Here are more names that may seem attractive as variable names but that are in fact functions in the base R package and thus may cause confusion: all(), args(), attr(), beta(), body(), col(), date(), det(), diag(), diff(), dim(), dir(), dump(), eigen(), file(), files(), gamma(), kappa(), length(), list(), load(), log(), max(), mean(), min(), open(), q(), raw(), row(), sample(), seq(), sub(), summary(), table(), type(), url(), vector(), and version(). I’m sure you get the idea - composite names of the type proposed above in CamelCase are usually safe.<a href="r-code-style.html#fnref27" class="footnote-back">↩︎</a></p></li>
+<li id="fn28"><p>.myProfile.R is itself a file in the local working directory. Simply open it with the RStudio editor, fix the error, and save. Then type source(“.myProfile.R”) into the console to overwrite the old (wrong) definition with the corrected one.<a href="r-code-style.html#fnref28" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -1122,47 +1130,47 @@ Version: 1.0<br>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": "https://github.com/bcb420-2020/R_basics/commit/master/13-R-code-style.Rmd",
-"text": null
-},
-"view": {
-"link": "https://github.com/bcb420-2020/R_basics/blob/master/13-R-code-style.Rmd",
-"text": null
-},
-"download": ["BCB420_Computational_Systems_Biology_Unit2_R_Basics.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection",
-"scroll_highlight": true
-},
-"toolbar": {
-"position": "fixed"
-},
-"new_session": false
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": "https://github.com/bcb420-2026/R_basics/commit/master/13-R-code-style.Rmd",
+    "text": null
+  },
+  "view": {
+    "link": "https://github.com/bcb420-2026/R_basics/blob/master/13-R-code-style.Rmd",
+    "text": null
+  },
+  "download": ["BCB420_Computational_Systems_Biology_Unit2_R_Basics.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection",
+    "scroll_highlight": true
+  },
+  "toolbar": {
+    "position": "fixed"
+  },
+  "new_session": false
 });
 });
 </script>

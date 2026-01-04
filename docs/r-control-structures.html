@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Control structures of R | BCB420 - Computational System Biology</title>
   <meta name="description" content="Prerequisite work for U of T course BCB420 - Computational System Biology" />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Control structures of R | BCB420 - Computational System Biology" />
   <meta property="og:type" content="book" />
@@ -54,8 +54,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -127,7 +128,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -655,7 +655,7 @@ div.csl-indent {
 <span id="cb341-3"><a href="r-control-structures.html#cb341-3" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">c</span>(x, <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span>))</span>
 <span id="cb341-4"><a href="r-control-structures.html#cb341-4" tabindex="-1"></a>}</span>
 <span id="cb341-5"><a href="r-control-structures.html#cb341-5" tabindex="-1"></a><span class="fu">print</span>(x)</span></code></pre></div>
-<pre><code>## [1] 3</code></pre>
+<pre><code>## [1] 2</code></pre>
 </div>
 <div id="if-else-if-and-else" class="section level3 hasAnchor" number="11.2.3">
 <h3><span class="header-section-number">11.2.3</span> “if”, “else if”, and “else”<a href="r-control-structures.html#if-else-if-and-else" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -701,7 +701,7 @@ div.csl-indent {
 <p>The ifelse() function deserves special mention: its arguments work like an if / else construct …</p>
 <p>ifelse(5 &gt; 7, TRUE, FALSE)</p>
 <div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="r-control-structures.html#cb354-1" tabindex="-1"></a><span class="fu">ifelse</span>(<span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="st">&quot;pickles&quot;</span>, <span class="st">&quot;cucumbers&quot;</span>)</span></code></pre></div>
-<pre><code>## [1] &quot;cucumbers&quot;</code></pre>
+<pre><code>## [1] &quot;pickles&quot;</code></pre>
 <p>i.e. ifelse(<condition is true>, <evaluate this>, <evaluate that> )</p>
 <p>But the cool thing about ifelse() is that it’s vectorized! You can apply it to a whole vector of conditions at once:</p>
 <div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="r-control-structures.html#cb356-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">27</span>);        <span class="fu">runif</span>(<span class="dv">10</span>)</span></code></pre></div>
@@ -754,14 +754,14 @@ div.csl-indent {
 <span id="cb365-13"><a href="r-control-structures.html#cb365-13" tabindex="-1"></a>    }</span>
 <span id="cb365-14"><a href="r-control-structures.html#cb365-14" tabindex="-1"></a>}</span>
 <span id="cb365-15"><a href="r-control-structures.html#cb365-15" tabindex="-1"></a><span class="fu">head</span>(outcomes, <span class="dv">36</span>)</span></code></pre></div>
-<pre><code>##  [1] &quot;low&quot;   &quot;high&quot;  &quot;low&quot;   &quot;high&quot;  &quot;seven&quot; &quot;seven&quot; &quot;seven&quot; &quot;low&quot;   &quot;high&quot; 
-## [10] &quot;seven&quot; &quot;low&quot;   &quot;low&quot;   &quot;high&quot;  &quot;high&quot;  &quot;seven&quot; &quot;low&quot;   &quot;high&quot;  &quot;seven&quot;
-## [19] &quot;high&quot;  &quot;high&quot;  &quot;low&quot;   &quot;seven&quot; &quot;high&quot;  &quot;seven&quot; &quot;low&quot;   &quot;high&quot;  &quot;low&quot;  
-## [28] &quot;low&quot;   &quot;low&quot;   &quot;high&quot;  &quot;low&quot;   &quot;low&quot;   &quot;high&quot;  &quot;seven&quot; &quot;low&quot;   &quot;seven&quot;</code></pre>
+<pre><code>##  [1] &quot;seven&quot; &quot;low&quot;   &quot;high&quot;  &quot;high&quot;  &quot;seven&quot; &quot;high&quot;  &quot;low&quot;   &quot;high&quot;  &quot;high&quot; 
+## [10] &quot;high&quot;  &quot;high&quot;  &quot;high&quot;  &quot;seven&quot; &quot;seven&quot; &quot;low&quot;   &quot;low&quot;   &quot;low&quot;   &quot;high&quot; 
+## [19] &quot;high&quot;  &quot;high&quot;  &quot;high&quot;  &quot;high&quot;  &quot;low&quot;   &quot;seven&quot; &quot;low&quot;   &quot;seven&quot; &quot;seven&quot;
+## [28] &quot;high&quot;  &quot;low&quot;   &quot;low&quot;   &quot;high&quot;  &quot;low&quot;   &quot;seven&quot; &quot;high&quot;  &quot;low&quot;   &quot;seven&quot;</code></pre>
 <div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="r-control-structures.html#cb367-1" tabindex="-1"></a><span class="fu">table</span>(outcomes)  <span class="co"># the table() function tabulates the elements</span></span></code></pre></div>
 <pre><code>## outcomes
 ##  high   low seven 
-## 10434 10348  4218</code></pre>
+## 10333 10499  4168</code></pre>
 <div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="r-control-structures.html#cb369-1" tabindex="-1"></a>                 <span class="co"># of a vector</span></span></code></pre></div>
 <p>round((36 * table(outcomes))/N) # Can you explain this expression?</p>
 <p>Note that there is nothing special about the expression for (i in 1:N) { … . Any expression that generates a sequence of items will do; I write a lot of code like for (fileName in dir()) { … or for (gene in data$name) {… , or for (column in colnames(expressionTable)) {… etc.</p>
@@ -778,7 +778,7 @@ div.csl-indent {
 <span id="cb370-6"><a href="r-control-structures.html#cb370-6" tabindex="-1"></a>  y[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(x[i])         <span class="co"># calculate one square root, grow y to store it</span></span>
 <span id="cb370-7"><a href="r-control-structures.html#cb370-7" tabindex="-1"></a>}</span>
 <span id="cb370-8"><a href="r-control-structures.html#cb370-8" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> startTime       <span class="co"># time it took</span></span></code></pre></div>
-<pre><code>## Time difference of 0.4094384 secs</code></pre>
+<pre><code>## Time difference of 0.2337682 secs</code></pre>
 <div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="r-control-structures.html#cb372-1" tabindex="-1"></a><span class="fu">rm</span>(x)                        <span class="co"># clean up</span></span>
 <span id="cb372-2"><a href="r-control-structures.html#cb372-2" tabindex="-1"></a><span class="fu">rm</span>(y)</span></code></pre></div>
 <p>Version 2: Define result object to be large enough</p>
@@ -790,7 +790,7 @@ div.csl-indent {
 <span id="cb373-6"><a href="r-control-structures.html#cb373-6" tabindex="-1"></a>  y[i] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(x[i])         <span class="co"># calculate one square root, store in Y</span></span>
 <span id="cb373-7"><a href="r-control-structures.html#cb373-7" tabindex="-1"></a>}</span>
 <span id="cb373-8"><a href="r-control-structures.html#cb373-8" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> startTime       <span class="co"># time it took</span></span></code></pre></div>
-<pre><code>## Time difference of 0.07610154 secs</code></pre>
+<pre><code>## Time difference of 0.06088901 secs</code></pre>
 <div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="r-control-structures.html#cb375-1" tabindex="-1"></a><span class="fu">rm</span>(x)                        <span class="co"># clean up</span></span>
 <span id="cb375-2"><a href="r-control-structures.html#cb375-2" tabindex="-1"></a><span class="fu">rm</span>(y)</span></code></pre></div>
 <p>Version 3: vectorized</p>
@@ -799,7 +799,7 @@ div.csl-indent {
 <span id="cb376-3"><a href="r-control-structures.html#cb376-3" tabindex="-1"></a>startTime <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()      <span class="co"># save start time</span></span>
 <span id="cb376-4"><a href="r-control-structures.html#cb376-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(x)                 <span class="co"># sqrt() is vectorized!</span></span>
 <span id="cb376-5"><a href="r-control-structures.html#cb376-5" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> startTime       <span class="co"># time it took</span></span></code></pre></div>
-<pre><code>## Time difference of 0.005522013 secs</code></pre>
+<pre><code>## Time difference of 0.003581762 secs</code></pre>
 <div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="r-control-structures.html#cb378-1" tabindex="-1"></a><span class="fu">rm</span>(x)                        <span class="co"># clean up</span></span>
 <span id="cb378-2"><a href="r-control-structures.html#cb378-2" tabindex="-1"></a><span class="fu">rm</span>(y)</span></code></pre></div>
 <p><strong>The tiny change of pre-allocating memory for the result object y, rather than dynamically growing the vector has made a huge difference. But using the vectorized version of the sqrt() function directly is the fastest approach.</strong></p>
@@ -1071,47 +1071,47 @@ Version: 1.1<br>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": "https://github.com/bcb420-2020/R_basics/commit/master/10-R-control-structures.Rmd",
-"text": null
-},
-"view": {
-"link": "https://github.com/bcb420-2020/R_basics/blob/master/10-R-control-structures.Rmd",
-"text": null
-},
-"download": ["BCB420_Computational_Systems_Biology_Unit2_R_Basics.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection",
-"scroll_highlight": true
-},
-"toolbar": {
-"position": "fixed"
-},
-"new_session": false
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": "https://github.com/bcb420-2026/R_basics/commit/master/10-R-control-structures.Rmd",
+    "text": null
+  },
+  "view": {
+    "link": "https://github.com/bcb420-2026/R_basics/blob/master/10-R-control-structures.Rmd",
+    "text": null
+  },
+  "download": ["BCB420_Computational_Systems_Biology_Unit2_R_Basics.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection",
+    "scroll_highlight": true
+  },
+  "toolbar": {
+    "position": "fixed"
+  },
+  "new_session": false
 });
 });
 </script>
